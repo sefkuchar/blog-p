@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | OZ Podbanské</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        .admin-container { padding: 40px; max-width: 900px; margin: 0 auto; font-family: 'Inter', sans-serif; }
+        .admin-card { background: #fff; padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #2c3e50; }
+        input, select { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
+        .editor-container { height: 250px; background: white; border-radius: 0 0 6px 6px; }
+        .btn { padding: 12px 24px; cursor: pointer; border: none; border-radius: 6px; font-weight: 600; transition: 0.2s; }
+        .btn-save { background: #27ae60; color: white; }
+        .btn-logout { background: #e74c3c; color: white; float: right; }
+        .sub-item { background: #f8f9fa; padding: 15px; margin-top: 10px; border-radius: 8px; border-left: 5px solid #2c3e50; display: flex; justify-content: space-between; align-items: center; }
+        .hidden { display: none; }
+        #loginOverlay { position:fixed; top:0; left:0; width:100%; height:100%; background:#f4f1ea; z-index:9999; display:flex; align-items:center; justify-content:center; }
+    </style>
+</head>
+<body>
+
+    <div id="loginOverlay">
+        <div class="admin-card" style="width:100%; max-width:400px; text-align:center;">
+            <h2 style="margin-bottom:20px;">Prihlásenie</h2>
+            <div class="form-group">
+                <label>Meno</label>
+                <input type="text" id="loginUser" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Heslo</label>
+                <input type="password" id="loginPass" class="form-control">
+            </div>
+            <button id="loginSubmitBtn" class="btn btn-save" style="width:100%;">Prihlásiť sa</button>
+            <p id="loginError" style="color:red; margin-top:15px; display:none;">Nesprávne údaje!</p>
+        </div>
+    </div>
+
+    <div id="adminContent" class="admin-container hidden">
+        <button class="btn btn-logout" id="logoutBtn">Odhlásiť sa</button>
+        <h1>Administrácia OZ Podbanské</h1>
+
+        <div class="admin-card">
+            <h3>1. Hero (Úvodná fotka a text)</h3>
+            <div class="form-group">
+                <label>Hlavný titulok</label>
+                <input type="text" id="heroMainTitle">
+            </div>
+            <div class="form-group">
+                <label>Podnadpis</label>
+                <input type="text" id="heroSubTitle">
+            </div>
+            <div class="form-group">
+                <label>Popis</label>
+                <input type="text" id="heroDesc">
+            </div>
+            <div class="form-group">
+                <label>Obrázok pozadia (Imgur Link)</label>
+                <input type="text" id="heroImageUrl">
+            </div>
+            <button class="btn btn-save" id="saveHeroBtn">Uložiť Hero</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>2. Kontaktné údaje</h3>
+            <div class="form-group">
+                <label>📍 Adresa</label>
+                <input type="text" id="contactAddress">
+            </div>
+            <div class="form-group">
+                <label>📞 Telefón</label>
+                <input type="text" id="contactPhone">
+            </div>
+            <div class="form-group">
+                <label>✉️ Email</label>
+                <input type="email" id="contactEmail">
+            </div>
+            <button class="btn btn-save" id="saveContactBtn">Uložiť Kontakt</button>
+        </div>
+
+        <div class="admin-card">
+            <h3>3. Sekcie a Príspevky (Podsekcie)</h3>
+            <select id="sectionSelector">
+                <option value="">-- Vybrať sekciu --</option>
+                <option value="about">O nás</option>
+                <option value="activities">Aktivity</option>
+                <option value="history">História</option>
+                <option value="nature">Príroda</option>
+                <option value="rules">Pravidlá</option>
+                <option value="magic">Magické Podbanské</option>
+            </select>
+
+            <div id="editorArea" class="hidden">
+                <div id="editItemModal" class="admin-card hidden" style="border: 2px solid #3498db; position: relative;">
+                    <h4>Upraviť príspevok</h4>
+                    <input type="hidden" id="editItemIndex">
+                    <div class="form-group">
+                        <label>Názov</label>
+                        <input type="text" id="editItemTitle">
+                    </div>
+                    <div class="form-group">
+                        <label>Obsah</label>
+                        <div id="editItemEditor" class="editor-container"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Obrázok (Link)</label>
+                        <input type="text" id="editItemImage">
+                    </div>
+                    <button class="btn btn-save" id="saveEditBtn">Uložiť zmeny</button>
+                    <button class="btn" onclick="document.getElementById('editItemModal').classList.add('hidden')">Zrušiť</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Hlavný titulok sekcie</label>
+                    <input type="text" id="mainTitle">
+                </div>
+                <div class="form-group">
+                    <label>Popis sekcie</label>
+                    <div id="mainDescriptionEditor" class="editor-container"></div>
+                </div>
+                <button class="btn btn-save" id="saveMainBtn">Uložiť info o sekcii</button>
+
+                <hr style="margin:40px 0;">
+                
+                <h4>Zoznam príspevkov</h4>
+                <div id="subItemsList"></div>
+
+                <h4 style="margin-top:40px;">Pridať nový príspevok</h4>
+                <div class="form-group">
+                    <input type="text" id="newItemTitle" placeholder="Názov">
+                </div>
+                <div class="form-group">
+                    <label>Text príspevku</label>
+                    <div id="newItemTextEditor" class="editor-container"></div>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="newItemImage" placeholder="Imgur Link">
+                </div>
+                <button class="btn btn-save" id="addItemBtn">Pridať do sekcie</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

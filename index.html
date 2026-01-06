@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZ Podbanské | Dedičstvo hôr</title>
+    <link rel="stylesheet" href="style.css?v=201">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar" id="mainNav">
+        <div class="nav-container">
+            <div class="nav-brand"><h1 class="brand-title">OZ Podbanské</h1></div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#about" class="nav-link">O nás</a></li>
+                <li><a href="#activities" class="nav-link">Aktivity</a></li>
+                <li><a href="#history" class="nav-link">História</a></li>
+                <li><a href="#nature" class="nav-link">Príroda</a></li>
+                <li><a href="#rules" class="nav-link">Pravidlá</a></li>
+                <li><a href="#magic" class="nav-link">Magické Podbanské</a></li>
+                <li><a href="#contact" class="nav-link">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-image"></div>
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="hero-headline">
+                    <span class="hero-headline-main"></span>
+                    <span class="hero-headline-sub"></span>
+                </h1>
+                <p class="hero-description"></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about"><div class="container" id="aboutContent"></div></section>
+    <section id="activities"><div class="container" id="activitiesContent"></div></section>
+    <section id="history"><div class="container" id="historyContent"></div></section>
+    <section id="nature"><div class="container" id="natureContent"></div></section>
+    <section id="rules"><div class="container" id="rulesContent"></div></section>
+    <section id="magic"><div class="container" id="magicContent"></div></section>
+
+    <section id="contact" class="section-contact">
+        <div class="container">
+            <div class="contact-header centered">
+                <p class="section-eyebrow">KONTAKT</p>
+                <h2 class="section-title">Spojte sa s nami</h2>
+                <p class="section-description">Nájdete nás na nasledujúcich adresách a číslach. Radi vám odpovieme na vaše otázky.</p>
+            </div>
+            
+            <div class="contact-info-grid">
+                <div class="contact-method">
+                    <div class="method-icon">📍</div>
+                    <div class="method-details">
+                        <h4>Adresa</h4>
+                        <p id="contact-address">Načítavam...</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="method-icon">📞</div>
+                    <div class="method-details">
+                        <h4>Telefón</h4>
+                        <p id="contact-phone">Načítavam...</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="method-icon">✉️</div>
+                    <div class="method-details">
+                        <h4>Email</h4>
+                        <p id="contact-email">Načítavam...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 OZ Podbanské | <a href="admin.html" style="color: white; opacity: 0.7;">Administrácia</a></p>
+        </div>
+    </footer>
+
+    <div id="lightbox" class="modal-overlay">
+        <span class="close-modal" id="closeLightbox">&times;</span>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="">
+            <div id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <div id="activityModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" id="closeActivityModal">&times;</span>
+            <img id="modalActivityImg" src="">
+            <div class="modal-body">
+                <h2 id="modalActivityTitle"></h2>
+                <div id="modalActivityText" class="rich-text-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js?v=201"></script>
+</body>
+</html>
